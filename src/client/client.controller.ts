@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Inject, Post, Query, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Patch, Post, Query, UsePipes, ValidationPipe } from '@nestjs/common';
 import { Client } from './models/client.entity';
 import { CreateClientDto } from './dto/create-user.dto';
 import { CLIENT_SERVICE } from './constants';
@@ -26,5 +26,10 @@ export class ClientController {
     @Get('pagination')
     async findAllPagination(@Query() paginationDto: PaginationDto) {
         return this.clientService.getClientsBySelectionStatusWithPagination(paginationDto);
+    }
+
+    @Patch('update-selected-false')
+    async updateSelectedToFalse(@Body() uuids: string[]): Promise<void> {
+        return this.clientService.updateClientsSelectedToFalseByUuid(uuids);
     }
 }

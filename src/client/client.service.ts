@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Client } from './models/client.entity';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { CreateClientDto } from './dto/create-user.dto';
 import { ClientServiceInterface } from './interfaces/client-service.interface';
 import { PaginationResponseDto } from './dto/pagination-response.dto';
@@ -45,7 +45,12 @@ export class ClientService implements ClientServiceInterface {
           page,
           limit,
         };
-      }
+    }
       
-      
+    async updateClientsSelectedToFalseByUuid(uuids: string[]): Promise<void> {
+        await this.clientRepository.update(
+            { id: In(uuids) },
+            { selected: false }
+        );
+    }  
 }

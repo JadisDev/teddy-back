@@ -7,4 +7,5 @@ export interface ClientServiceInterface {
   create(data: CreateClientDto): Promise<Client>;
   findAll(): Promise<Client[]>;
   getClientsBySelectionStatusWithPagination(paginationDto: PaginationDto, selected?: boolean): Promise<PaginationResponseDto>
+  updateClientsSelectedToFalseByUuid(uuids: string[]): Promise<void>
 }
