@@ -4,6 +4,8 @@ import { Client } from './models/client.entity';
 import { Repository } from 'typeorm';
 import { CreateClientDto } from './dto/create-user.dto';
 import { ClientServiceInterface } from './interfaces/client-service.interface';
+import { PaginationResponseDto } from './dto/pagination-response.dto';
+import { PaginationDto } from './dto/pagination.dto';
 
 @Injectable()
 export class ClientService implements ClientServiceInterface {
@@ -21,4 +23,29 @@ export class ClientService implements ClientServiceInterface {
     async findAll(): Promise<Client[]> {
         return await this.clientRepository.find();
     }
+
+    async getClientsBySelectionStatusWithPagination(
+        paginationDto: PaginationDto,
+        selected = false
+      ): Promise<PaginationResponseDto> {
+        const page = paginationDto?.page ?? 1;
+        const limit = paginationDto?.limit ?? 10;
+      
+        const [data, total] = await this.clientRepository.findAndCount({
+          skip: (page - 1) * limit,
+          take: limit,
+          where: [
+            { selected },
+          ],
+        });
+      
+        return {
+          data,
+          total,
+          page,
+          limit,
+        };
+      }
+      
+      
 }
