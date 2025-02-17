@@ -1,13 +1,24 @@
-import { Controller, Get } from '@nestjs/common';
-import { ClientService } from './client.service';
+import { Body, Controller, Get, Inject, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Client } from './models/client.entity';
+import { CreateClientDto } from './dto/create-user.dto';
+import { CLIENT_SERVICE } from './constants';
+import { ClientServiceInterface } from './interfaces/client-service.interface';
 
 @Controller('client')
 export class ClientController {
 
-    constructor(private readonly clientService: ClientService) {}
+    constructor(
+        @Inject(CLIENT_SERVICE) private readonly clientService: ClientServiceInterface,
+    ) {}
 
     @Get()
-    getHello(): string {
-        return this.clientService.getHello();
+    async getHello(): Promise<Client[]> {
+        return await this.clientService.findAll();
+    }
+
+    @Post()
+    @UsePipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
+    async create(@Body() createClientDto: CreateClientDto): Promise<Client> {
+        return await this.clientService.create(createClientDto);
     }
 }
