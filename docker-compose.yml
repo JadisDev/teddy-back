@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:13-alpine
+    container_name: postgres_teddy
+    restart: always
+    environment:
+      POSTGRES_USER: teddyuser
+      POSTGRES_PASSWORD: teddypassword
+      POSTGRES_DB: teddydb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  app:
+    build: .
+    container_name: teddy_app
+    restart: always
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_USER: teddyuser
+      DATABASE_PASSWORD: teddypassword
+      DATABASE_NAME: teddydb
+    ports:
+      - "3000:3000"
+    command: ["npm", "run", "start:dev"]
+    volumes:
+      - ./src:/app/src
+    networks:
+      - app-network
+
+volumes:
+  postgres_data:
+
+networks:
+  app-network:
+    driver: bridge
