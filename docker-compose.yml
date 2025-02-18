@@ -30,7 +30,7 @@ services:
       DATABASE_NAME: teddydb
     ports:
       - "3000:3000"
-    command: ["npm", "run", "start:dev"]
+    command: sh ./src/scripts/start.sh
     volumes:
       - ./src:/app/src
     networks:
