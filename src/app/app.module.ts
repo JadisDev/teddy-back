@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { ClientModule } from './client/client.module';
+import { AppController } from './controllers/app.controller';
+import { ClientModule } from '../client/client.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Client } from './client/entities/client.entity';
-import { AuthModule } from './auth/auth.module';
+import { Client } from '../client/entities/client.entity';
+import { AuthModule } from '../auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
