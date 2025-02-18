@@ -1,12 +1,12 @@
 import { Body, Controller, Delete, Get, Inject, Param, Patch, Post, Query, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
-import { Client } from './models/client.entity';
-import { CreateClientDto } from './dto/create-user.dto';
-import { CLIENT_SERVICE } from './constants';
-import { ClientServiceInterface } from './interfaces/client-service.interface';
-import { PaginationDto } from './dto/pagination.dto';
+import { Client } from '../entities/client.entity';
+import { CreateClientDto } from '../dto/create-user.dto';
+import { CLIENT_SERVICE } from '../constants';
+import { ClientServiceInterface } from '../interfaces/client-service.interface';
+import { PaginationDto } from '../dto/pagination.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiQuery, ApiBearerAuth, ApiParam } from '@nestjs/swagger';
-import { UuidArrayDto } from './dto/uuid-list.dto';
+import { UuidArrayDto } from '../dto/uuid-list.dto';
 
 @ApiTags('Clientes')
 @ApiBearerAuth()

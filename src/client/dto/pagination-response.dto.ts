@@ -1,4 +1,4 @@
-import { Client } from '../models/client.entity';
+import { Client } from '../entities/client.entity';
 import { IsArray, IsInt, IsObject, Min } from 'class-validator';
 
 export class PaginationResponseDto {

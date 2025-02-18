@@ -1,4 +1,4 @@
-import { Client } from "../models/client.entity";
+import { Client } from "../entities/client.entity";
 import { CreateClientDto } from "../dto/create-user.dto";
 import { PaginationDto } from "../dto/pagination.dto";
 import { PaginationResponseDto } from "../dto/pagination-response.dto";

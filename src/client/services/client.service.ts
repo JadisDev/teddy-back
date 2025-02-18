@@ -1,11 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, In } from 'typeorm';
-import { Client } from './models/client.entity';
-import { CreateClientDto } from './dto/create-user.dto';
-import { ClientServiceInterface } from './interfaces/client-service.interface';
-import { PaginationResponseDto } from './dto/pagination-response.dto';
-import { PaginationDto } from './dto/pagination.dto';
+import { Client } from '../entities/client.entity';
+import { CreateClientDto } from '../dto/create-user.dto';
+import { ClientServiceInterface } from '../interfaces/client-service.interface';
+import { PaginationResponseDto } from '../dto/pagination-response.dto';
+import { PaginationDto } from '../dto/pagination.dto';
 
 @Injectable()
 export class ClientService implements ClientServiceInterface {
