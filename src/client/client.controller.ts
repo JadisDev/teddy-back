@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Inject, Param, Patch, Post, Query, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Inject, Param, Patch, Post, Query, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { Client } from './models/client.entity';
 import { CreateClientDto } from './dto/create-user.dto';
 import { CLIENT_SERVICE } from './constants';
@@ -80,5 +80,13 @@ export class ClientController {
     ) {
         const updatedClient = await this.clientService.updateClientByUuid(uuid, updateClientDto);
         return updatedClient;
+    }
+
+    @ApiOperation({ summary: 'Deletar um cliente pelo UUID' })
+    @ApiResponse({ status: 200, description: 'Cliente deletado com sucesso.' })
+    @ApiResponse({ status: 404, description: 'Cliente não encontrado.' })
+    @Delete(':uuid')
+    async deleteClient(@Param('uuid') uuid: string): Promise<void> {
+        return this.clientService.deleteClientByUuid(uuid);
     }
 }

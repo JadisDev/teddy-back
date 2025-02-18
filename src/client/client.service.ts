@@ -61,4 +61,14 @@ export class ClientService implements ClientServiceInterface {
     await this.clientRepository.update({ id: uuid }, updateClientDto);
     return updateClientDto;
   }
+
+  async deleteClientByUuid(uuid: string): Promise<void> {
+    const client = await this.clientRepository.findOne({ where: { id: uuid } });
+    
+    if (!client) {
+      throw new NotFoundException(`Cliente com UUID ${uuid} não encontrado`);
+    }
+  
+    await this.clientRepository.delete({ id: uuid });
+  }
 }
