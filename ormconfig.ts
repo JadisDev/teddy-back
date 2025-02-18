@@ -1,4 +1,4 @@
-import { Client } from 'src/client/models/client.entity';
+import { Client } from 'src/client/entities/client.entity';
 import { DataSource } from 'typeorm';
 
 export const AppDataSource = new DataSource({
