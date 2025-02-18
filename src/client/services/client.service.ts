@@ -6,69 +6,40 @@ import { CreateClientDto } from '../dto/create-user.dto';
 import { ClientServiceInterface } from '../interfaces/client-service.interface';
 import { PaginationResponseDto } from '../dto/pagination-response.dto';
 import { PaginationDto } from '../dto/pagination.dto';
+import { ClientRepository } from '../repositories/client.repository';
 
 @Injectable()
 export class ClientService implements ClientServiceInterface {
-  constructor(
-    @InjectRepository(Client)
-    private clientRepository: Repository<Client>,
-  ) {}
+
+  constructor(private readonly clientRepository: ClientRepository) {}
 
   async create(createClientDto: CreateClientDto): Promise<Client> {
-    const client = this.clientRepository.create(createClientDto);
-    return await this.clientRepository.save(client);
+    return this.clientRepository.create(createClientDto);
   }
 
   async findAll(): Promise<Client[]> {
-    return await this.clientRepository.find();
+    return this.clientRepository.findAll();
   }
 
   async getClientsBySelectionStatusWithPagination(
     paginationDto: PaginationDto,
     selected = false,
   ): Promise<PaginationResponseDto> {
-    const page = paginationDto?.page ?? 1;
-    const limit = paginationDto?.limit ?? 10;
-
-    const [data, total] = await this.clientRepository.findAndCount({
-      skip: (page - 1) * limit,
-      take: limit,
-      where: [{ selected }],
-    });
-
-    return {
-      data,
-      total,
-      page,
-      limit,
-    };
+    return this.clientRepository.findBySelectionStatusWithPagination(paginationDto, selected);
   }
 
   async updateClientsSelectedToFalseByUuid(uuids: string[]): Promise<void> {
-    await this.clientRepository.update({ id: In(uuids) }, { selected: false });
+    await this.clientRepository.updateSelectedToFalseByUuid(uuids);
   }
 
   async updateClientByUuid(
     uuid: string,
     updateClientDto: Partial<CreateClientDto>,
   ): Promise<Partial<CreateClientDto>> {
-    const client = await this.clientRepository.findOne({ where: { id: uuid } });
-
-    if (!client) {
-      throw new NotFoundException(`Cliente com UUID ${uuid} não encontrado`);
-    }
-
-    await this.clientRepository.update({ id: uuid }, updateClientDto);
-    return updateClientDto;
+    return this.clientRepository.updateByUuid(uuid, updateClientDto);
   }
 
   async deleteClientByUuid(uuid: string): Promise<void> {
-    const client = await this.clientRepository.findOne({ where: { id: uuid } });
-    
-    if (!client) {
-      throw new NotFoundException(`Cliente com UUID ${uuid} não encontrado`);
-    }
-  
-    await this.clientRepository.delete({ id: uuid });
+    await this.clientRepository.deleteClientByUuid(uuid);
   }
 }

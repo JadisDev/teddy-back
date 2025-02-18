@@ -4,6 +4,7 @@ import { ClientController } from './controllers/client.controller';
 import { ClientService } from './services/client.service';
 import { Client } from './entities/client.entity';
 import { CLIENT_SERVICE } from './constants';
+import { ClientRepository } from './repositories/client.repository';
 
 @Module({
   imports:[TypeOrmModule.forFeature([Client])],
@@ -12,7 +13,8 @@ import { CLIENT_SERVICE } from './constants';
     {
       provide: CLIENT_SERVICE,
       useClass: ClientService
-    }
+    },
+    ClientRepository
   ],
   exports: [CLIENT_SERVICE]
 })
