@@ -4,6 +4,8 @@ import { AppService } from './app.service';
 import { ClientModule } from './client/client.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Client } from './client/models/client.entity';
+import { AuthModule } from './auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -17,7 +19,9 @@ import { Client } from './client/models/client.entity';
     entities: [Client], 
     synchronize: true,
     }),
-    ClientModule
+    ConfigModule.forRoot(),
+    AuthModule,
+    ClientModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,10 +1,12 @@
-import { Body, Controller, Get, Inject, Patch, Post, Query, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Patch, Post, Query, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { Client } from './models/client.entity';
 import { CreateClientDto } from './dto/create-user.dto';
 import { CLIENT_SERVICE } from './constants';
 import { ClientServiceInterface } from './interfaces/client-service.interface';
 import { PaginationDto } from './dto/pagination.dto';
+import { AuthGuard } from '@nestjs/passport';
 
+@UseGuards(AuthGuard('jwt'))
 @Controller('client')
 export class ClientController {
 
