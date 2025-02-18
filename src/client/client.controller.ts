@@ -1,11 +1,11 @@
-import { Body, Controller, Get, Inject, Patch, Post, Query, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Param, Patch, Post, Query, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { Client } from './models/client.entity';
 import { CreateClientDto } from './dto/create-user.dto';
 import { CLIENT_SERVICE } from './constants';
 import { ClientServiceInterface } from './interfaces/client-service.interface';
 import { PaginationDto } from './dto/pagination.dto';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiQuery, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiQuery, ApiBearerAuth, ApiParam } from '@nestjs/swagger';
 import { UuidArrayDto } from './dto/uuid-list.dto';
 
 @ApiTags('Clientes')
@@ -66,5 +66,19 @@ export class ClientController {
     @Patch('update-selected-false')
     async updateSelectedToFalse(@Body() uuids: UuidArrayDto): Promise<void> {
         return this.clientService.updateClientsSelectedToFalseByUuid(uuids.uuids);
+    }
+
+    @ApiOperation({ summary: 'Atualizar um cliente pelo UUID' })
+    @ApiResponse({ status: 200, description: 'Cliente atualizado com sucesso.' })
+    @ApiResponse({ status: 404, description: 'Cliente não encontrado.' })
+    @ApiParam({ name: 'uuid', description: 'UUID do cliente a ser atualizado' })
+    @ApiBody({ type: CreateClientDto, description: 'Dados atualizados do cliente' })
+    @Patch(':uuid')
+    async updateClient(
+        @Param('uuid') uuid: string,
+        @Body() updateClientDto: Partial<CreateClientDto>
+    ) {
+        const updatedClient = await this.clientService.updateClientByUuid(uuid, updateClientDto);
+        return updatedClient;
     }
 }
