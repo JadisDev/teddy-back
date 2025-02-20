@@ -33,6 +33,7 @@ export class ClientRepository {
       skip: (page - 1) * limit,
       take: limit,
       where: [{ selected }],
+      order: { name: 'ASC' },
     });
 
     return { data, total, page, limit };
@@ -77,6 +78,9 @@ export class ClientRepository {
   }
 
   async findAllClientsSelected(): Promise<Client[]> {
-    return await this.clientRepository.find({ where: { selected: true } });
+    return await this.clientRepository.find({
+      where: { selected: true },
+      order: { name: 'ASC' },
+    });
   }
 }
