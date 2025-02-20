@@ -85,7 +85,7 @@ export class ClientController {
   })
   @Get('pagination')
   async findAllPagination(@Query() paginationDto: PaginationDto) {
-    return this.clientService.getClientsBySelectionStatusWithPagination(
+    return await this.clientService.getClientsBySelectionStatusWithPagination(
       paginationDto,
     );
   }
@@ -97,7 +97,9 @@ export class ClientController {
   })
   @Patch('update-selected-false')
   async updateSelectedToFalse(@Body() uuids: UuidArrayDto): Promise<void> {
-    return this.clientService.updateClientsSelectedToFalseByUuid(uuids.uuids);
+    return await this.clientService.updateClientsSelectedToFalseByUuid(
+      uuids.uuids,
+    );
   }
 
   @ApiOperation({ summary: 'Atualizar um cliente pelo UUID' })
@@ -125,7 +127,7 @@ export class ClientController {
   @ApiResponse({ status: 404, description: 'Cliente não encontrado.' })
   @Delete(':uuid')
   async deleteClient(@Param('uuid') uuid: string): Promise<void> {
-    return this.clientService.deleteClientByUuid(uuid);
+    return await this.clientService.deleteClientByUuid(uuid);
   }
 
   @ApiOperation({ summary: 'Lista todos os clientes selecionados' })

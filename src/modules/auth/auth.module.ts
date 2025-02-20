@@ -23,9 +23,9 @@ import { AUTH_SERVICE } from './constants';
   providers: [
     {
       provide: AUTH_SERVICE,
-      useClass: AuthService
-    }, 
-    JwtStrategy
+      useClass: AuthService,
+    },
+    JwtStrategy,
   ],
   controllers: [AuthController],
   exports: [AUTH_SERVICE, JwtModule],

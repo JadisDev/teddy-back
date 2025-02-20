@@ -7,15 +7,15 @@ import { CLIENT_SERVICE } from './constants';
 import { ClientRepository } from './repositories/client.repository';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([Client])],
+  imports: [TypeOrmModule.forFeature([Client])],
   controllers: [ClientController],
   providers: [
     {
       provide: CLIENT_SERVICE,
-      useClass: ClientService
+      useClass: ClientService,
     },
-    ClientRepository
+    ClientRepository,
   ],
-  exports: [CLIENT_SERVICE]
+  exports: [CLIENT_SERVICE],
 })
 export class ClientModule {}

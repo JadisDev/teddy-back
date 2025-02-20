@@ -15,11 +15,11 @@ export class ClientRepository {
 
   async create(createClientDto: CreateClientDto): Promise<Client> {
     const client = this.clientRepository.create(createClientDto);
-    return await this.clientRepository.save(client);
+    return this.clientRepository.save(client);
   }
 
   async findAll(): Promise<Client[]> {
-    return await this.clientRepository.find();
+    return this.clientRepository.find();
   }
 
   async findBySelectionStatusWithPagination(
@@ -40,7 +40,7 @@ export class ClientRepository {
   }
 
   async updateSelectedToFalseByUuid(uuids: string[]): Promise<void> {
-    await this.clientRepository.update({ id: In(uuids) }, { selected: false });
+    this.clientRepository.update({ id: In(uuids) }, { selected: false });
   }
 
   async updateByUuid(
@@ -74,11 +74,11 @@ export class ClientRepository {
       throw new NotFoundException(`Cliente com UUID ${uuid} não encontrado`);
     }
 
-    await this.clientRepository.delete({ id: uuid });
+    this.clientRepository.delete({ id: uuid });
   }
 
   async findAllClientsSelected(): Promise<Client[]> {
-    return await this.clientRepository.find({
+    return this.clientRepository.find({
       where: { selected: true },
       order: { name: 'ASC' },
     });

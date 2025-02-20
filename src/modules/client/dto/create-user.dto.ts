@@ -14,7 +14,7 @@ export class CreateClientDto {
   @ApiProperty({
     description: 'Salário do cliente',
     type: Number,
-    example: 3000.50,
+    example: 3000.5,
   })
   @IsNumber({ allowNaN: false }, { message: 'Wage must be a valid number' })
   @IsNotEmpty()
@@ -23,9 +23,12 @@ export class CreateClientDto {
   @ApiProperty({
     description: 'Valor da empresa do cliente',
     type: Number,
-    example: 500000.00,
+    example: 500000.0,
   })
-  @IsNumber({ allowNaN: false }, { message: 'Company value must be a valid number' })
+  @IsNumber(
+    { allowNaN: false },
+    { message: 'Company value must be a valid number' },
+  )
   @IsNotEmpty()
   company_value: number;
 

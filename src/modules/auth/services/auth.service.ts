@@ -4,9 +4,7 @@ import { AuthServiceInterface } from '../interfaces/auth.service.interface';
 
 @Injectable()
 export class AuthService implements AuthServiceInterface {
-  constructor(
-    private readonly jwtService: JwtService,
-  ) {}
+  constructor(private readonly jwtService: JwtService) {}
 
   async validateUser(name: string): Promise<any> {
     if (name) {

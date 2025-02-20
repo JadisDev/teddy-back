@@ -33,7 +33,7 @@ export class ClientService implements ClientServiceInterface {
   }
 
   async updateClientsSelectedToFalseByUuid(uuids: string[]): Promise<void> {
-    await this.clientRepository.updateSelectedToFalseByUuid(uuids);
+    this.clientRepository.updateSelectedToFalseByUuid(uuids);
   }
 
   async updateClientByUuid(
@@ -44,6 +44,6 @@ export class ClientService implements ClientServiceInterface {
   }
 
   async deleteClientByUuid(uuid: string): Promise<void> {
-    await this.clientRepository.deleteClientByUuid(uuid);
+    this.clientRepository.deleteClientByUuid(uuid);
   }
 }
