@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './controllers/app.controller';
-import { ClientModule } from '../client/client.module';
+import { AppController } from './app.controller';
+import { ClientModule } from './modules/client/client.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Client } from '../client/entities/client.entity';
-import { AuthModule } from '../auth/auth.module';
+import { Client } from './modules/client/entities/client.entity';
+import { AuthModule } from './modules/auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
-import { SeedService } from 'src/seeds/seed.service';
+import { SeedService } from './database/seeds/seed.service';
 
 @Module({
   imports: [

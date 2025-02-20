@@ -68,11 +68,15 @@ export class ClientRepository {
 
   async deleteClientByUuid(uuid: string): Promise<void> {
     const client = await this.clientRepository.findOne({ where: { id: uuid } });
-    
+
     if (!client) {
       throw new NotFoundException(`Cliente com UUID ${uuid} não encontrado`);
     }
-  
+
     await this.clientRepository.delete({ id: uuid });
+  }
+
+  async findAllClientsSelected(): Promise<Client[]> {
+    return await this.clientRepository.find({ where: { selected: true } });
   }
 }

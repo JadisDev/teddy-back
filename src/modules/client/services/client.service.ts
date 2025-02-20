@@ -1,6 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, In } from 'typeorm';
+import { Injectable } from '@nestjs/common';
 import { Client } from '../entities/client.entity';
 import { CreateClientDto } from '../dto/create-user.dto';
 import { ClientServiceInterface } from '../interfaces/client-service.interface';
@@ -10,8 +8,11 @@ import { ClientRepository } from '../repositories/client.repository';
 
 @Injectable()
 export class ClientService implements ClientServiceInterface {
-
   constructor(private readonly clientRepository: ClientRepository) {}
+
+  findAllClientsSelected(): Promise<Client[]> {
+    return this.clientRepository.findAllClientsSelected();
+  }
 
   async create(createClientDto: CreateClientDto): Promise<Client> {
     return this.clientRepository.create(createClientDto);
@@ -25,7 +26,10 @@ export class ClientService implements ClientServiceInterface {
     paginationDto: PaginationDto,
     selected = false,
   ): Promise<PaginationResponseDto> {
-    return this.clientRepository.findBySelectionStatusWithPagination(paginationDto, selected);
+    return this.clientRepository.findBySelectionStatusWithPagination(
+      paginationDto,
+      selected,
+    );
   }
 
   async updateClientsSelectedToFalseByUuid(uuids: string[]): Promise<void> {

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Client } from '../client/entities/client.entity';
+import { Client } from '../../modules/client/entities/client.entity';
 import { Repository } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -21,14 +21,14 @@ export class SeedService {
   }
 
   createClients() {
-    const clients:Client[] = [];
+    const clients: Client[] = [];
     for (let i = 0; i < 20; i++) {
       clients.push({
         name: `Client ${i + 1}`,
-        wage: 4534.90,
+        wage: 4534.9,
         company_value: 1000.65,
         selected: false,
-        id: uuidv4()
+        id: uuidv4(),
       });
     }
     return clients;
